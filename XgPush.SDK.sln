@@ -1,0 +1,80 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{07DE39DD-8E21-46F6-B34B-901AA9E4B47C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{FAA54CF6-3FE1-4225-8E10-EDEFC5C4DE45}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{F8FD2E2E-1ACC-4C7B-AABE-1E2A69275F4E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{C484913F-0F4C-4E86-8ACE-59159167860B}"
+	ProjectSection(SolutionItems) = preProject
+		resources\ClickAction.cs = resources\ClickAction.cs
+		resources\Message.cs = resources\Message.cs
+		resources\MessageIOS.cs = resources\MessageIOS.cs
+		resources\Style.cs = resources\Style.cs
+		resources\TagTokenPair.cs = resources\TagTokenPair.cs
+		resources\TimeInterval.cs = resources\TimeInterval.cs
+		resources\Xg-Push-SDK-CSharp-1.1.9.zip = resources\Xg-Push-SDK-CSharp-1.1.9.zip
+		resources\XingeApp.cs = resources\XingeApp.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{C66F0182-C2AF-4D5E-99D8-1F1BD1ADA818}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XgPush.SDK.Server", "src\XgPush.SDK.Server\XgPush.SDK.Server.csproj", "{84AAED19-2B86-4FBE-A60E-264E6BF6A707}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XgPush.SDK.Server.Test.ConsoleApp", "test\XgPush.SDK.Server.Test.ConsoleApp\XgPush.SDK.Server.Test.ConsoleApp.csproj", "{93A177A7-5080-4E6F-8209-D7BCB36C6CBA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XgPush.SDK.Server.Test.UnitTest", "test\XgPush.SDK.Server.Test.UnitTest\XgPush.SDK.Server.Test.UnitTest.csproj", "{71D0F4DA-B4E9-41E6-BB61-301450A69778}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.XgPush.SDK.Server(netcoreapp21)", "samples\aspnetcore21(netcoreapp21)\Sample.XgPush.SDK.Server(netcoreapp21).csproj", "{C7401998-59A8-4A47-BEB5-09CEF8A437DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.XgPush.SDK.Server(net45)", "samples\aspnetmvc5(net45)\Sample.XgPush.SDK.Server(net45).csproj", "{AD051AC5-64CF-4ECD-8957-B575460D6275}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84AAED19-2B86-4FBE-A60E-264E6BF6A707}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84AAED19-2B86-4FBE-A60E-264E6BF6A707}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84AAED19-2B86-4FBE-A60E-264E6BF6A707}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84AAED19-2B86-4FBE-A60E-264E6BF6A707}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93A177A7-5080-4E6F-8209-D7BCB36C6CBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93A177A7-5080-4E6F-8209-D7BCB36C6CBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93A177A7-5080-4E6F-8209-D7BCB36C6CBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93A177A7-5080-4E6F-8209-D7BCB36C6CBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71D0F4DA-B4E9-41E6-BB61-301450A69778}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71D0F4DA-B4E9-41E6-BB61-301450A69778}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71D0F4DA-B4E9-41E6-BB61-301450A69778}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71D0F4DA-B4E9-41E6-BB61-301450A69778}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7401998-59A8-4A47-BEB5-09CEF8A437DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7401998-59A8-4A47-BEB5-09CEF8A437DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7401998-59A8-4A47-BEB5-09CEF8A437DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7401998-59A8-4A47-BEB5-09CEF8A437DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD051AC5-64CF-4ECD-8957-B575460D6275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD051AC5-64CF-4ECD-8957-B575460D6275}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD051AC5-64CF-4ECD-8957-B575460D6275}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD051AC5-64CF-4ECD-8957-B575460D6275}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{84AAED19-2B86-4FBE-A60E-264E6BF6A707} = {07DE39DD-8E21-46F6-B34B-901AA9E4B47C}
+		{93A177A7-5080-4E6F-8209-D7BCB36C6CBA} = {F8FD2E2E-1ACC-4C7B-AABE-1E2A69275F4E}
+		{71D0F4DA-B4E9-41E6-BB61-301450A69778} = {F8FD2E2E-1ACC-4C7B-AABE-1E2A69275F4E}
+		{C7401998-59A8-4A47-BEB5-09CEF8A437DB} = {FAA54CF6-3FE1-4225-8E10-EDEFC5C4DE45}
+		{AD051AC5-64CF-4ECD-8957-B575460D6275} = {FAA54CF6-3FE1-4225-8E10-EDEFC5C4DE45}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EFB653B0-0164-4EAA-969E-A0F485605E2A}
+	EndGlobalSection
+EndGlobal
