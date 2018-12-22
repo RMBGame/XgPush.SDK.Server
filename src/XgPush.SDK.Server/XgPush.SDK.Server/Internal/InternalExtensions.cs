@@ -272,5 +272,13 @@ namespace XgPush.SDK.Server.Internal
         {
             return Enum.IsDefined(typeof(T), @enum);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="requestUri"></param>
+        /// <returns></returns>
+        internal static bool IsHttpUrl(this string requestUri)
+            => requestUri.StartsWith(HttpSchemeConcat, StringComparison.OrdinalIgnoreCase) || requestUri.StartsWith(HttpsSchemeConcat, StringComparison.OrdinalIgnoreCase);
     }
 }

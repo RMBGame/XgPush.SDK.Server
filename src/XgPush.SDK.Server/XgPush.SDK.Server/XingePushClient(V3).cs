@@ -145,12 +145,17 @@ namespace XgPush.SDK.Server
             {
                 var contentString = Serialize(content);
 
-                if (!requestUri.StartsWith(Constants.HttpSchemeConcat,
-                    StringComparison.OrdinalIgnoreCase) &&
-                    !requestUri.StartsWith(Constants.HttpsSchemeConcat,
-                    StringComparison.OrdinalIgnoreCase))
+                if (!requestUri.IsHttpUrl())
                 {
-                    requestUri = Constants.BaseAddress_HTTPS + requestUri;
+                    var baseAddress = client.BaseAddress;
+                    if (baseAddress == null)
+                    {
+                        requestUri = baseAddress.ToString() + requestUri;
+                    }
+                    else
+                    {
+                        requestUri = Constants.BaseAddress_HTTPS + requestUri;
+                    }
                 }
 
                 var rsp = await PostAsync(requestUri, contentString);
