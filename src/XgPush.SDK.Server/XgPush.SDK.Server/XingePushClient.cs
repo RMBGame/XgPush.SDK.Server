@@ -25,6 +25,26 @@ namespace XgPush.SDK.Server
         /// </summary>
         protected readonly HttpClient client;
 
+        private HttpMethod mHttpMethod = HttpMethod.Get;
+
+        /// <summary>
+        /// Rest API V2 请求方式
+        /// <para>仅支持 <see cref="HttpMethod.Get"/> || <see cref="HttpMethod.Post"/> </para>
+        /// </summary>
+        public HttpMethod HttpMethod
+        {
+            get
+            {
+                return mHttpMethod;
+            }
+            set
+            {
+                if (value != HttpMethod.Get && value != HttpMethod.Post)
+                    throw new ArgumentOutOfRangeException(nameof(HttpMethod));
+                mHttpMethod = value;
+            }
+        }
+
 #pragma warning disable IDE1006 // 命名样式
 
         /// <summary>
@@ -242,6 +262,25 @@ namespace XgPush.SDK.Server
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="requestUri"></param>
+        /// <param name="nameValueCollection"></param>
+        /// <returns></returns>
+        protected virtual async Task<string> PostStringAsync([NotNull]string requestUri, IEnumerable<KeyValuePair<string, string>> nameValueCollection)
+        {
+            using (var request = new HttpRequestMessage(HttpMethod.Post, requestUri))
+            {
+                if (nameValueCollection != default)
+                    request.Content = new FormUrlEncodedContent(nameValueCollection);
+                using (var response = await client.SendAsync(request))
+                {
+                    return await ReadAsStringAsync(response);
+                }
+            }
+        }
+
+        /// <summary>
         ///
         /// </summary>
         /// <param name="errMsg"></param>
@@ -268,11 +307,11 @@ namespace XgPush.SDK.Server
         /// <param name="requestUri"></param>
         /// <param name="args1"></param>
         /// <returns></returns>
-        protected Task<XingePushClientResult> GetAsync(
+        protected Task<XingePushClientResult> SendAsync(
             string requestUri,
             params KeyValuePair<string, object>[] args1)
         {
-            return GetAsync(requestUri, null, args1);
+            return SendAsync(requestUri, null, args1);
         }
 
         /// <summary>
@@ -282,12 +321,12 @@ namespace XgPush.SDK.Server
         /// <param name="args0"></param>
         /// <param name="args1"></param>
         /// <returns></returns>
-        protected Task<XingePushClientResult> GetAsync(
+        protected Task<XingePushClientResult> SendAsync(
             string requestUri,
             IToDictionary args0,
             params KeyValuePair<string, object>[] args1)
         {
-            return GetAsync(requestUri, args0, (IEnumerable<KeyValuePair<string, object>>)args1);
+            return SendAsync(requestUri, args0, (IEnumerable<KeyValuePair<string, object>>)args1);
         }
 
         /// <summary>
@@ -297,11 +336,11 @@ namespace XgPush.SDK.Server
         /// <param name="requestUri"></param>
         /// <param name="args1"></param>
         /// <returns></returns>
-        protected Task<XingePushClientResult<TResult>> GetAsync<TResult>(
+        protected Task<XingePushClientResult<TResult>> SendAsync<TResult>(
             string requestUri,
             params KeyValuePair<string, object>[] args1) where TResult : IResultV2, new()
         {
-            return GetAsync<TResult>(requestUri, null, args1);
+            return SendAsync<TResult>(requestUri, null, args1);
         }
 
         /// <summary>
@@ -312,12 +351,12 @@ namespace XgPush.SDK.Server
         /// <param name="args0"></param>
         /// <param name="args1"></param>
         /// <returns></returns>
-        protected Task<XingePushClientResult<TResult>> GetAsync<TResult>(
+        protected Task<XingePushClientResult<TResult>> SendAsync<TResult>(
             string requestUri,
             IToDictionary args0,
             params KeyValuePair<string, object>[] args1) where TResult : IResultV2, new()
         {
-            return GetAsync<TResult>(requestUri, args0, (IEnumerable<KeyValuePair<string, object>>)args1);
+            return SendAsync<TResult>(requestUri, args0, (IEnumerable<KeyValuePair<string, object>>)args1);
         }
 
         /// <summary>
@@ -326,11 +365,11 @@ namespace XgPush.SDK.Server
         /// <param name="requestUri"></param>
         /// <param name="args1"></param>
         /// <returns></returns>
-        protected Task<XingePushClientResult> GetAsync(
+        protected Task<XingePushClientResult> SendAsync(
             string requestUri,
             IEnumerable<KeyValuePair<string, object>> args1)
         {
-            return GetAsync(requestUri, null, args1);
+            return SendAsync(requestUri, null, args1);
         }
 
         /// <summary>
@@ -340,12 +379,12 @@ namespace XgPush.SDK.Server
         /// <param name="args0"></param>
         /// <param name="args1"></param>
         /// <returns></returns>
-        protected Task<XingePushClientResult> GetAsync(
+        protected Task<XingePushClientResult> SendAsync(
             string requestUri,
             IToDictionary args0,
             IEnumerable<KeyValuePair<string, object>> args1 = null)
         {
-            return GetAsync(CreateErrorResult, requestUri, args0, args1);
+            return SendAsync(CreateErrorResult, requestUri, args0, args1);
         }
 
         /// <summary>
@@ -355,11 +394,11 @@ namespace XgPush.SDK.Server
         /// <param name="requestUri"></param>
         /// <param name="args1"></param>
         /// <returns></returns>
-        protected Task<XingePushClientResult<TResult>> GetAsync<TResult>(
+        protected Task<XingePushClientResult<TResult>> SendAsync<TResult>(
             string requestUri,
             IEnumerable<KeyValuePair<string, object>> args1) where TResult : IResultV2, new()
         {
-            return GetAsync<TResult>(requestUri, null, args1);
+            return SendAsync<TResult>(requestUri, null, args1);
         }
 
         /// <summary>
@@ -370,12 +409,12 @@ namespace XgPush.SDK.Server
         /// <param name="args0"></param>
         /// <param name="args1"></param>
         /// <returns></returns>
-        protected Task<XingePushClientResult<TResult>> GetAsync<TResult>(
+        protected Task<XingePushClientResult<TResult>> SendAsync<TResult>(
             string requestUri,
             IToDictionary args0,
             IEnumerable<KeyValuePair<string, object>> args1 = null) where TResult : IResultV2, new()
         {
-            return GetAsync(CreateErrorResult<TResult>, requestUri, args0, args1);
+            return SendAsync(CreateErrorResult<TResult>, requestUri, args0, args1);
         }
 
         /// <summary>
@@ -387,7 +426,7 @@ namespace XgPush.SDK.Server
         /// <param name="args0"></param>
         /// <param name="args1"></param>
         /// <returns></returns>
-        protected async Task<TResult> GetAsync<TResult>(
+        protected async Task<TResult> SendAsync<TResult>(
             Func<string, TResult> createErrorResult,
             string requestUri,
             IToDictionary args0 = null,
@@ -453,30 +492,46 @@ namespace XgPush.SDK.Server
                 args.Add(Constants.environment, iOSEnvironment);
             }
 
-            var requestUriStringBuilder = new StringBuilder();
-            var signStringBuilder = new StringBuilder(Constants.GET);
+            IDictionary<string, string> postArgs = null;
+            StringBuilder requestUriStringBuilder = null;
+            StringBuilder signStringBuilder;
 
-            if (!requestUri.StartsWith(Constants.HttpSchemeConcat,
-                   StringComparison.OrdinalIgnoreCase) &&
-                   !requestUri.StartsWith(Constants.HttpsSchemeConcat,
-                   StringComparison.OrdinalIgnoreCase))
+            if (HttpMethod == HttpMethod.Get)
+            {
+                requestUriStringBuilder = new StringBuilder();
+                signStringBuilder = new StringBuilder(Constants.GET);
+            }
+            else if (HttpMethod == HttpMethod.Post)
+            {
+                postArgs = new Dictionary<string, string>();
+                signStringBuilder = new StringBuilder(Constants.POST);
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException(nameof(HttpMethod));
+            }
+
+            if (requestUri.IsHttpUrl())
             {
                 var u = new Uri(requestUri);
-                requestUriStringBuilder.Append(requestUri);
+                requestUriStringBuilder?.Append(requestUri);
                 signStringBuilder.Append(u.Host);
                 signStringBuilder.Append(u.AbsolutePath);
             }
             else
             {
-                if (client.BaseAddress == null)
+                var baseAddress = client.BaseAddress;
+                if (baseAddress == null)
                 {
-                    requestUriStringBuilder.Append(Constants.BaseAddress);
+                    requestUri = Constants.BaseAddress_HTTPS + requestUri;
+                    requestUriStringBuilder.Append(Constants.BaseAddress_HTTPS);
                     signStringBuilder.Append(Constants.Host);
                 }
                 else
                 {
+                    requestUri = baseAddress.ToString() + requestUri;
                     requestUriStringBuilder.Append(requestUri);
-                    signStringBuilder.Append(client.BaseAddress.Host);
+                    signStringBuilder.Append(baseAddress.Host);
                 }
                 signStringBuilder.Append(requestUri);
             }
@@ -486,13 +541,22 @@ namespace XgPush.SDK.Server
                 signStringBuilder.Append(arg.Key);
                 signStringBuilder.Append(Constants.equal);
                 var value = arg.Value == null ? string.Empty :
-                    (arg.Value is JArray jArray ? jArray.ToString(Formatting.None) : arg.Value.ToString());
+                    (arg.Value is JArray jArray ?
+                    jArray.ToString(Formatting.None) : arg.Value.ToString());
                 signStringBuilder.Append(value);
 
-                requestUriStringBuilder.Append(arg.Key);
-                requestUriStringBuilder.Append(Constants.equal);
-                value = TFMs_Compat.UrlEncode(value);
-                requestUriStringBuilder.Append(value);
+                if (postArgs != null)
+                {
+                    postArgs.Add(arg.Key, value);
+                }
+
+                if (requestUriStringBuilder != null)
+                {
+                    requestUriStringBuilder.Append(arg.Key);
+                    requestUriStringBuilder.Append(Constants.equal);
+                    value = TFMs_Compat.UrlEncode(value);
+                    requestUriStringBuilder.Append(value);
+                }
             }
 
             signStringBuilder.Append(m_secret_key);
@@ -500,13 +564,34 @@ namespace XgPush.SDK.Server
             var signString = signStringBuilder.ToString();
             signString = ComputeMD5(signString);
 
-            requestUriStringBuilder.Append(Constants.sign);
-            requestUriStringBuilder.Append(Constants.equal);
-            requestUriStringBuilder.Append(signString);
+            if (requestUriStringBuilder != null)
+            {
+                requestUriStringBuilder.Append(Constants.sign);
+                requestUriStringBuilder.Append(Constants.equal);
+                requestUriStringBuilder.Append(signString);
 
-            requestUri = requestUriStringBuilder.ToString();
+                requestUri = requestUriStringBuilder.ToString();
+            }
 
-            var @string = await GetStringAsync(requestUri);
+            if (HttpMethod == HttpMethod.Post)
+            {
+                args.Add(Constants.sign, signString);
+            }
+
+            string @string;
+
+            if (HttpMethod == HttpMethod.Get)
+            {
+                @string = await GetStringAsync(requestUri);
+            }
+            else if (HttpMethod == HttpMethod.Post)
+            {
+                @string = await PostStringAsync(requestUri, postArgs);
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException(nameof(HttpMethod));
+            }
 
             return @string.Deserialize<TResult>();
         }
@@ -515,7 +600,7 @@ namespace XgPush.SDK.Server
 
 #if DEBUG
 
-        Task<XingePushClientResult> DEBUG.IDebugXingePushClient.DebugTest(string url) => GetAsync(url);
+        Task<XingePushClientResult> DEBUG.IDebugXingePushClient.DebugTest(string url) => SendAsync(url);
 
 #endif
     }

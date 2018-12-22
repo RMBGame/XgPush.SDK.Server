@@ -60,6 +60,7 @@
         /// <summary>
         ///
         /// </summary>
+        [System.Obsolete("", true)]
         public const string BaseAddress = HttpScheme + SchemeConcat + Host;
 
         /// <summary>
@@ -75,6 +76,11 @@
         ///
         /// </summary>
         public const string GET = nameof(GET);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string POST = nameof(POST);
 
         /// <summary>
         ///

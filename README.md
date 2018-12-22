@@ -8,29 +8,14 @@ XgPush Server SDK third party (unofficial)
 * Package Manager
 
 ```
-Install-Package XgPush.SDK.Server -Version 1.2.0-preview.812.compat.1.1.9
+Install-Package XgPush.SDK.Server
 ```
 
 * .NET CLI
 
 ```
-dotnet add package XgPush.SDK.Server --version 1.2.0-preview.812.compat.1.1.9
+dotnet add package XgPush.SDK.Server
 ```
-
-### 注意事项
-
-⚠ 当前包具有 [SemVer 2.0.0](https://docs.microsoft.com/zh-cn/nuget/reference/package-versioning#semantic-versioning-200) 仅可用于以下 NuGet 客户端：
-
-* NuGet 4.3.0
-* Visual Studio 2017 15.3 +
-* 使用 Visual Studio 2015 [NuGet VSIX v3.6.0](https://dist.nuget.org/visualstudio-2015-vsix/latest/NuGet.Tools.vsix)
-* dotnet
-    * dotnetcore.exe (.NET SDK 2.0.0+)
-
-第三方客户端：
-
-* JetBrains 的 Rider
-* Paket 依存版本 5.0 +
 
 ### 初始化SDK
 
@@ -54,7 +39,7 @@ protected void Application_Start(){
 
 ## 支持的目标框架
 
-* .NET Standard 1.3 **(不支持V2版本接口)**
+* .NET Standard 1.3
 * .NET Standard 2.0
 * .NET Framework 4.0
 * .NET Framework 4.5
@@ -85,7 +70,7 @@ protected void Application_Start(){
     * 查询应用覆盖的设备Token总数
     * 查询指定设备Token的注册状态
 
-[SampleController](/samples/aspnetcore21(netcoreapp21)/Controllers/SampleController.cs)
+[SampleController](https://github.com/RMBGame/XgPush.SDK.Server/tree/master/samples/aspnetcore21(netcoreapp21)/Controllers/SampleController.cs)
 
 ### [Push API v3](https://xg.qq.com/docs/server_api/v3/push_api_v3.html)
 
@@ -179,18 +164,6 @@ var rsp_push_accounts = await pushClient.v3.Push(req_push_accounts);
 ```
 
 ### [Rest API v2](https://xg.qq.com/docs/server_api/v2/rest.html)
-
-<!--
-
-#### 全量推送
-
-```
-var req_push_all_v2 = await pushClient.PushAllDevice(msg_android);
-```
-
-#### 
-
--->
 
 #### 查询消息状态
 

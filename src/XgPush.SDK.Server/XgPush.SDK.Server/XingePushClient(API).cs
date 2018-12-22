@@ -46,7 +46,7 @@ namespace XgPush.SDK.Server
         public Task<XingePushClientResult<SubPushIdsResult>> PushAllDevice([NotNull]MessageBase message)
         {
             ValidationUtils.ArgumentNotNull(message, nameof(message));
-            return GetAsync<SubPushIdsResult>(RESTAPI_PUSHALLDEVICE, message);
+            return SendAsync<SubPushIdsResult>(RESTAPI_PUSHALLDEVICE, message);
         }
 
         #endregion
@@ -68,7 +68,7 @@ namespace XgPush.SDK.Server
             ValidationUtils.ArgumentNotNull(message, nameof(message));
             ValidationUtils.ArgumentNotNull(tags, nameof(tags));
             if (tags.Count > SendSingleTagsMaxCount) throw new ArgumentOutOfRangeException(nameof(tags));
-            return GetAsync<SubPushIdsResult>(RESTAPI_PUSHTAGS, message,
+            return SendAsync<SubPushIdsResult>(RESTAPI_PUSHTAGS, message,
                 new p(Constants.tags_list, tags),
                 new p(Constants.tags_op, operators ?? Operator.OR));
         }
@@ -86,7 +86,7 @@ namespace XgPush.SDK.Server
             ValidationUtils.ArgumentNotNull(message, nameof(message));
             ValidationUtils.ArgumentNotNull(accounts, nameof(accounts));
             if (accounts.Count > SendSingleAccountsMaxCount) throw new ArgumentOutOfRangeException(nameof(accounts));
-            return GetAsync<ResultCodesResult>(RESTAPI_PUSHACCOUNTLIST, message,
+            return SendAsync<ResultCodesResult>(RESTAPI_PUSHACCOUNTLIST, message,
                 new p(Constants.account_list, accounts));
         }
 
@@ -101,7 +101,7 @@ namespace XgPush.SDK.Server
         public Task<XingePushClientResult<PushIdResult>> CreateMultiPush([NotNull]MessageBase message)
         {
             ValidationUtils.ArgumentNotNull(message, nameof(message));
-            return GetAsync<PushIdResult>(RESTAPI_CREATEMULTIPUSH, message);
+            return SendAsync<PushIdResult>(RESTAPI_CREATEMULTIPUSH, message);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace XgPush.SDK.Server
             ValidationUtils.ArgumentNotNull(accounts, nameof(accounts));
             if (pushId == 0) throw new ArgumentOutOfRangeException(nameof(pushId));
             if (accounts.Count > SendSingleMultipleMaxCount) throw new ArgumentOutOfRangeException(nameof(accounts));
-            return GetAsync(RESTAPI_PUSHACCOUNTLISTMULTIPLE,
+            return SendAsync(RESTAPI_PUSHACCOUNTLISTMULTIPLE,
                     new p(Constants.push_id, pushId),
                     new p(Constants.account_list, accounts));
         }
@@ -139,7 +139,7 @@ namespace XgPush.SDK.Server
             ValidationUtils.ArgumentNotNull(devices, nameof(devices));
             if (pushId == 0) throw new ArgumentOutOfRangeException(nameof(pushId));
             if (devices.Count > SendSingleMultipleMaxCount) throw new ArgumentOutOfRangeException(nameof(devices));
-            return GetAsync(RESTAPI_PUSHDEVICELISTMULTIPLE,
+            return SendAsync(RESTAPI_PUSHDEVICELISTMULTIPLE,
                 new p(Constants.push_id, pushId),
                 new p(Constants.device_list, devices));
         }
@@ -159,7 +159,7 @@ namespace XgPush.SDK.Server
         {
             ValidationUtils.ArgumentNotNull(account, nameof(account));
             ValidationUtils.ArgumentNotNull(message, nameof(message));
-            return GetAsync(RESTAPI_PUSHSINGLEACCOUNT, message,
+            return SendAsync(RESTAPI_PUSHSINGLEACCOUNT, message,
                 new p(Constants.account, account));
         }
 
@@ -174,7 +174,7 @@ namespace XgPush.SDK.Server
         {
             ValidationUtils.ArgumentNotNull(device_token, nameof(device_token));
             ValidationUtils.ArgumentNotNull(message, nameof(message));
-            return GetAsync(RESTAPI_PUSHSINGLEACCOUNT, message,
+            return SendAsync(RESTAPI_PUSHSINGLEACCOUNT, message,
                 new p(Constants.device_token, device_token));
         }
 
@@ -225,7 +225,7 @@ namespace XgPush.SDK.Server
         public Task<XingePushClientResult<QueryPushStatusResult>> QueryPushStatus([NotNull] ICollection<string> pushIds)
         {
             ValidationUtils.ArgumentNotNull(pushIds, nameof(pushIds));
-            return GetAsync<QueryPushStatusResult>(RESTAPI_QUERYPUSHSTATUS,
+            return SendAsync<QueryPushStatusResult>(RESTAPI_QUERYPUSHSTATUS,
                 new p(Constants.push_ids, GetPushIds(pushIds)));
         }
 
@@ -299,7 +299,7 @@ namespace XgPush.SDK.Server
                 param.Add(nameof(message), message);
             if (operation.HasValue)
                 param.Add(nameof(operation), operation.Value);
-            return GetAsync<QueryPushStatusResult>(RESTAPI_QUERYPUSHSTATUS, param);
+            return SendAsync<QueryPushStatusResult>(RESTAPI_QUERYPUSHSTATUS, param);
         }
 
         #endregion
@@ -315,7 +315,7 @@ namespace XgPush.SDK.Server
         public Task<XingePushClientResult<StatusResult>> CancelTimingPush([NotNull] string push_id)
         {
             ValidationUtils.ArgumentNotNull(push_id, nameof(push_id));
-            return GetAsync<StatusResult>(RESTAPI_CANCELTIMINGPUSH,
+            return SendAsync<StatusResult>(RESTAPI_CANCELTIMINGPUSH,
                 new p(Constants.push_id, push_id));
         }
 
@@ -336,7 +336,7 @@ namespace XgPush.SDK.Server
         public Task<XingePushClientResult> BatchSetTag([NotNull] ICollection<TagTokenPair> tagTokenPairs)
         {
             ValidationUtils.ArgumentNotNull(tagTokenPairs, nameof(tagTokenPairs));
-            return GetAsync(RESTAPI_BATCHSETTAG,
+            return SendAsync(RESTAPI_BATCHSETTAG,
                 new p(Constants.tag_token_list, tagTokenPairs.Select(x => x.ToArray())));
         }
 
@@ -364,7 +364,7 @@ namespace XgPush.SDK.Server
         public Task<XingePushClientResult> BatchDelTag([NotNull] ICollection<TagTokenPair> tagTokenPairs)
         {
             ValidationUtils.ArgumentNotNull(tagTokenPairs, nameof(tagTokenPairs));
-            return GetAsync(RESTAPI_BATCHDELTAG,
+            return SendAsync(RESTAPI_BATCHDELTAG,
                 new p(Constants.tag_token_list, tagTokenPairs.Select(x => x.ToArray())));
         }
 
@@ -391,7 +391,7 @@ namespace XgPush.SDK.Server
         /// <param name="limit">默认值：100，限制单次查询数量，建议小于200。</param>
         /// <returns></returns>
         public Task<XingePushClientResult<QueryTotalTagsResult>> QueryTags(uint start = 0, uint limit = 100)
-            => GetAsync<QueryTotalTagsResult>(RESTAPI_QUERYTAGS,
+            => SendAsync<QueryTotalTagsResult>(RESTAPI_QUERYTAGS,
                 new d
                 {
                     { nameof(start), start },
@@ -411,7 +411,7 @@ namespace XgPush.SDK.Server
         public Task<XingePushClientResult<QueryTagsResult>> QueryTokenTags([NotNull]string device_token)
         {
             ValidationUtils.ArgumentNotNull(device_token, nameof(device_token));
-            return GetAsync<QueryTagsResult>(RESTAPI_QUERYTOKENTAGS,
+            return SendAsync<QueryTagsResult>(RESTAPI_QUERYTOKENTAGS,
                 new p(nameof(device_token), device_token));
         }
 
@@ -427,7 +427,7 @@ namespace XgPush.SDK.Server
         public Task<XingePushClientResult<QueryDeviceCountResult>> QueryTagTokenNum([NotNull]string tag)
         {
             ValidationUtils.ArgumentNotNull(tag, nameof(tag));
-            return GetAsync<QueryDeviceCountResult>(RESTAPI_QUERYTAGTOKENNUM,
+            return SendAsync<QueryDeviceCountResult>(RESTAPI_QUERYTAGTOKENNUM,
                 new p(nameof(tag), tag));
         }
 
@@ -446,7 +446,7 @@ namespace XgPush.SDK.Server
         public Task<XingePushClientResult<TokensResult>> QueryTokensOfAccount([NotNull]string account)
         {
             ValidationUtils.ArgumentNotNull(account, nameof(account));
-            return GetAsync<TokensResult>(RESTAPI_QUERYTOKENSOFACCOUNT,
+            return SendAsync<TokensResult>(RESTAPI_QUERYTOKENSOFACCOUNT,
                 new p(Constants.account, account));
         }
 
@@ -461,7 +461,7 @@ namespace XgPush.SDK.Server
         {
             ValidationUtils.ArgumentNotNull(account, nameof(account));
             ValidationUtils.ArgumentNotNull(device_token, nameof(device_token));
-            return GetAsync<TokensResult>(RESTAPI_DELETETOKENOFACCOUNT,
+            return SendAsync<TokensResult>(RESTAPI_DELETETOKENOFACCOUNT,
                 new p(Constants.account, account),
                 new p(Constants.device_token, device_token));
         }
@@ -475,7 +475,7 @@ namespace XgPush.SDK.Server
         public Task<XingePushClientResult> DeleteAllTokensOfAccount([NotNull]string account)
         {
             if (account == null) throw new ArgumentNullException(nameof(account));
-            return GetAsync(RESTAPI_DELETEALLTOKENSOFACCOUNT,
+            return SendAsync(RESTAPI_DELETEALLTOKENSOFACCOUNT,
                 new p(Constants.account, account));
         }
 
@@ -492,7 +492,7 @@ namespace XgPush.SDK.Server
         /// <returns></returns>
         [Obsolete(ObsoleteMessageUtil)]
         public Task<XingePushClientResult<QueryDeviceCountResult>> QueryDeviceCount()
-            => GetAsync<QueryDeviceCountResult>(RESTAPI_QUERYDEVICECOUNT);
+            => SendAsync<QueryDeviceCountResult>(RESTAPI_QUERYDEVICECOUNT);
 
         #endregion
 
@@ -508,7 +508,7 @@ namespace XgPush.SDK.Server
         public Task<XingePushClientResult<AppTokenInfoResult>> QueryTokenInfo([NotNull]string device_token)
         {
             ValidationUtils.ArgumentNotNull(device_token, nameof(device_token));
-            return GetAsync<AppTokenInfoResult>(RESTAPI_QUERYINFOOFTOKEN,
+            return SendAsync<AppTokenInfoResult>(RESTAPI_QUERYINFOOFTOKEN,
                 new p(nameof(device_token), device_token));
         }
 
