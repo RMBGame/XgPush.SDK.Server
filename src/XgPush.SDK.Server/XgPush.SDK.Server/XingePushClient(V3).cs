@@ -148,7 +148,7 @@ namespace XgPush.SDK.Server
                 if (!requestUri.IsHttpUrl())
                 {
                     var baseAddress = client.BaseAddress;
-                    if (baseAddress == null)
+                    if (baseAddress != null)
                     {
                         requestUri = baseAddress.ToString() + requestUri;
                     }
