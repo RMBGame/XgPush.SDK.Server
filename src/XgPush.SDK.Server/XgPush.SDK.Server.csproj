@@ -10,7 +10,7 @@
     <PackageProjectUrl>https://github.com/RMBGame/XgPush.SDK.Server</PackageProjectUrl>
     <RepositoryUrl>https://github.com/RMBGame/XgPush.SDK.Server.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.3.0</Version>
+    <Version>1.3.0.1</Version>
     <Product>腾讯移动推送(信鸽)服务端SDK</Product>
     <PackageId>XgPush.SDK.Server</PackageId>
     <Authors>anonymous</Authors>
